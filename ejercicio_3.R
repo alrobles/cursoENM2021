@@ -1,0 +1,7 @@
+subcuencas_3 <- subcuencas %>% filter(SUBCUENCA %in% c("L. Totolzin", "R. Cazones", "R. Salado")) %>% select(SUBCUENCA)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(sf, stars)
+Passerina <- readr::read_csv("DATOS/Tablas/Passerina_versicolor.csv") %>% sf::st_as_sf(coords = c("longitude", "latitude"))
+st_crs(Passerina) <- st_crs("+proj=longlat +datum=WGS84")
+angela <- list.files(path = "DATOS/ANGELA_CUERVO_2013/", pattern = ".tif$", full.names = TRUE) %>% read_stars()
+PasserinaBio <- stars::st_extract(angela, Passerina)
